@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React hometask. Lesson1, task1</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</head>
+<body style="background-color: #eceeef">
+	<div id="app" class="container"></div>
+</body>
+	<script type="text/babel">
+
+		class Article extends React.Component {
+			render(){
+				return <article className="blockquote alert-success rounded">
+						<h1 className="text-center">{this.props.title}</h1>
+						<p className="text-justify">{this.props.body}</p>
+						<p className="font-italic text-right">by {this.props.author}</p>
+					</article>;
+			} 
+		};
+
+		ReactDOM.render(
+		<div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12">
+			<Article title="About infinity things" author="Albert Einstein" body="Two things are infinite: the universe and human stupidity; and I'm not sure about the universe."/>
+			<Article title="Three advices" author="Stephen Hawking" body="One, remember to look up at the stars and not down at your feet. Two, never give up work. Work gives you meaning and purpose and life is empty without it. Three, if you are lucky enough to find love, remember it is there and don't throw it away."/>
+		</div>,
+			document.getElementById("app"));		
+	</script>
+</html>
