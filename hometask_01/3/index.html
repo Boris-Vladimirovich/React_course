@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>React hometask. Lesson1, task3</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: #eceeef">
+    <div id='app' class="container"></div>
+
+    <script type="text/babel">
+
+        let CONTACTS = [
+            {
+                id: 1,
+                name: 'Darth Vader',
+                phoneNumber: '+250966666666',
+                image: 'img/darth.gif',
+                email: 'darthvader@empire.com',
+                address: 'Death Star'
+            }, {
+                id: 2,
+                name: 'Princess Leia',
+                phoneNumber: '+250966344466',
+                image: 'img/leia.gif',
+                email: 'leia@alliance.com',
+                address: 'Yavin'
+            }, {
+                id: 3,
+                name: 'Luke Skywalker',
+                phoneNumber: '+250976654433',
+                image: 'img/luke.gif',
+                email: 'luke@jedi.com',
+                address: 'Tatooine'
+            }, {
+                id: 4,
+                name: 'Chewbacca',
+                phoneNumber: '+250456784935',
+                image: 'img/chewbacca.gif',
+                email: 'chew@falcon.com',
+                address: 'Alderaan'
+            }
+        ];
+
+        class Contact extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {isOpen : props.isOpen || false };
+            };
+
+            handleClick = (event) => {
+                this.setState({
+                    isOpen: !this.state.isOpen
+                });
+            }
+
+            render(){
+                return (
+                    <li className="alert alert-info row" onClick={this.handleClick}>
+                        <div className="col-3">
+                            <img className="rounded-circle" width="100px" height="100px" src={this.props.image}/>
+                        </div>
+                        <div className="d-inline-block col-9">
+                            <div className="h3 font-weight-bold">{this.props.name}</div>
+                            <div className="h5">{this.props.phoneNumber}</div>
+                            {this.state.isOpen && (
+                            <div>
+                                <div className="h5">{this.props.email}</div>
+                                <div className="h5">{this.props.address}</div>
+                            </div>
+                            )}
+                        </div>
+                    </li>
+                );
+            };
+        };
+
+        class ContactsList extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {displayedContacts : props.Contacts || CONTACTS};
+            };
+
+            handleSearch = (event) => {
+                let searchQuery = event.target.value.toLowerCase();
+                let displayedContacts = CONTACTS.filter(function(el) {
+                    let searchValue = el.name.toLowerCase();
+                    return searchValue.indexOf(searchQuery) !== -1;
+                });
+
+                this.setState({
+                    displayedContacts: displayedContacts
+                });
+            };
+
+            render(){
+                return (
+                    <div>
+                        <input type="text" className="form-control col-12 col-sm-6 mx-auto" placeholder="Search by name..." onChange={this.handleSearch}/>
+                        <ul className="p-0 col-12 col-lg-6 mx-auto">
+                            {
+                               this.state.displayedContacts.map(function(el) {
+                                    return <Contact
+                                        key={el.id}
+                                        name={el.name}
+                                        phoneNumber={el.phoneNumber}
+                                        image={el.image}
+                                        email={el.email}
+                                        address={el.address}
+                                    />;
+                               })
+                            }
+                        </ul>
+                    </div>
+                );
+            }
+        };
+
+        ReactDOM.render(<ContactsList/>, document.getElementById("app"));
+
+    </script>
+</body>
+</html>
