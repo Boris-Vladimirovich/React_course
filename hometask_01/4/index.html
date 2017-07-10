@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>React hometask. Lesson1, task4</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body style="background-color: #eceeef">
+    <div id='app' class="container"></div>
+
+    <script type="text/babel">
+        class Calculator extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {                    
+                    displayedValue: "0",
+                    mayBeFloat: true
+                };
+            };
+
+            handleDigitClick = (event) => {
+                if(this.state.displayedValue === "0"){
+                    this.setState({
+                        displayedValue: event.target.innerHTML
+                    })
+                }else{
+                    this.setState({
+                        displayedValue: this.state.displayedValue.concat(event.target.innerHTML)
+                    })
+                }
+            };
+
+            handleDotClick = (event) => {
+                if(this.state.mayBeFloat){
+                    this.setState({
+                        displayedValue: this.state.displayedValue.concat("."),
+                        mayBeFloat: false
+                    })
+                }
+            };
+
+            handleClickClear = (event) => {
+                this.setState({
+                    displayedValue: "0",
+                    mayBeFloat: true
+                });
+            };
+
+            handleBackspaceClick = (event) => {
+                if(this.state.displayedValue.length > 1){
+                    this.setState({
+                        displayedValue: this.state.displayedValue.slice(0, -1)
+                    });
+                }else{
+                    this.handleClickClear();
+                }
+            }
+
+            handleCalculate = (event) => {
+                this.setState({
+                    displayedValue: eval(this.state.displayedValue).toString(),
+                    mayBeFloat: true
+                })
+            }
+
+            handleOperatorClick = (event) => {
+
+                let tmp = this.state.displayedValue;
+
+                if( isNaN(tmp.charAt(tmp.length - 1)) ){
+                    tmp = tmp.slice(0,-1);
+                }
+                this.setState({
+                    displayedValue: tmp.concat(event.target.innerHTML),
+                    mayBeFloat: true
+                }) 
+            }
+
+            render(){
+                return(
+                    <div className="col-8 col-sm-6 col-md-4 col-lg-3 col-xl-2 mx-auto">
+                        <div className="rounded-0 form-control text-right">{this.state.displayedValue}</div>
+                        <div className="">
+                        <button className="rounded-0 col-6 btn btn-info" onClick={this.handleClickClear}>C</button>
+                        <button className="rounded-0 col-6 btn btn-info" onClick={this.handleBackspaceClick}><i className="fa fa-arrow-left"/></button>
+                        </div><div className="">
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>7</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>8</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>9</button>
+                        <button className="rounded-0 btn btn-warning col-3" onClick={this.handleOperatorClick}>/</button>
+                        </div><div className="">
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>4</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>5</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>6</button>
+                        <button className="rounded-0 btn btn-warning col-3" onClick={this.handleOperatorClick}>*</button>
+                        </div><div className="">
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>1</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>2</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>3</button>
+                        <button className="rounded-0 btn btn-warning col-3" onClick={this.handleOperatorClick}>-</button>
+                        </div><div className="">
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDigitClick}>0</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleDotClick}>.</button>
+                        <button className="rounded-0 btn btn-secondary col-3" onClick={this.handleCalculate}>=</button>
+                        <button className="rounded-0 btn btn-warning col-3" onClick={this.handleOperatorClick}>+</button>
+                        </div>
+                    </div>
+                );
+            };
+        };
+        ReactDOM.render(<Calculator/>, document.getElementById("app"));
+    </script>
+</body>
+</html>
