@@ -1,0 +1,30 @@
+body {
+    background-color: #eaeaea;
+}
+
+.list {
+    padding-left: 2rem;
+    padding-top: 1rem;
+}
+
+.delete-task {
+    position: absolute;
+    top:5px;
+    right:5px;
+    display: none;
+    cursor: pointer;
+}
+
+.task:hover .delete-task {
+    display: block;
+}
+
+.completed{
+    text-decoration: line-through;
+    color: #9c9c9c;
+}
+
+.app{
+    max-width: 500px;
+}
+
